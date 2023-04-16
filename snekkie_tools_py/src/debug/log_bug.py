@@ -1,9 +1,11 @@
 # IMPORTS
 from inspect import currentframe, getframeinfo  # This is required so that we can log the file and line that the function was called at
+import os
 
 
 # DOCUMENTATION
-# The log_bug function logs a bug to 'debug_logs.txt'
+# The log_bug function logs a bug to 'debug_logs.txt'.
+# This function only works on Linux, and I refuse to add Windows or MacOS support, I would be fine with adding BSD support, or support forany other FOSS operating systems.
 # the log_bug function has two parameters:
 #
 # - description
@@ -23,8 +25,18 @@ def log_bug(description, logDir=None):
     line = frameinfo.lineno  # Stores the line in a variable
     file = frameinfo.filename  # Stores the location of the file in a variable
     log = (f"\n{description}\n File: {file}\n Line: {line}.\n")  # Puts the description, the file location and the line number (that the function was called at) in a variable
-    with open(f"{logDir}/debug_logs.txt", "a") as logs:  # Opens 'debug_logs.txt' in append mode as logs
-        logs.write(log)  # Writes the thing I explained earlier to 'debug_logs.txt'
-        logs.close()  # Closes 'debug_logs.txt'
+    if logDir:  # If the logDir parameter has a value:
+        dir_exists = os.path.exists(logDir)  # This variable checks if the value of 'logDir' is a valid directory
+        if dir_exists:  # If the value of 'logDir' is a valid directory:
+            with open(f"{logDir}/debug_logs.txt", "a") as logs:  # Opens 'debug_logs.txt' in append mode as logs in the directory given in 'logDir'
+                logs.write(log)  # Writes the thing I explained earlier to 'debug_logs.txt'
+                logs.close()  # Closes 'debug_logs.txt'
+        else:  # If the value of 'logDir' isn't a valid directory:
+            raise Exception("Invalid directory to store 'debug_logs.txt'.")  # Raises an exception about it
+    else:  # If the logDir parameter doesn't have a value:
+        home = os.getenv("HOME")  # Gets the location of the home directory
+        with open(f"{home}/debug_logs.txt", "a") as logs:  # Opens 'debug_logs.txt' in append mode as logs in the home directory
+            logs.write(log)  # Writes the thing I explained earlier to 'debug_logs.txt'
+            logs.close()  # Closes 'debug_logs.txt'
     raise Exception(description)  # Raises an exception so that the interpreter knows that something's wrong
 

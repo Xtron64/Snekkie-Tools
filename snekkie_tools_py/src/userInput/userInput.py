@@ -224,7 +224,7 @@ def userInput(question=None, dataType=None, case=None):
     elif dataType == bool_kw:  # If the user's response is meant to be returned as a boolean
         answer = boolUserInput(question)  # Gets the user to input a boolean value
         return answer  # Returns the boolean value that the user has inputted
-    elif dataType is None:  # If the dataType parameter doesn't have a value
+    elif dataType == None:  # If the dataType parameter doesn't have a value
         answer == strUserInput(question)  # Gets the user to input a valid string
         return answer  # Returns the user's response
     else:  # If the dataType function has an invalid value:
