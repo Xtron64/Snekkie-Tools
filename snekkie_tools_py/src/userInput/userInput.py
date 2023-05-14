@@ -228,4 +228,5 @@ def userInput(question=None, dataType=None, case=None):
         answer == strUserInput(question)  # Gets the user to input a valid string
         return answer  # Returns the user's response
     else:  # If the dataType function has an invalid value:
-        raise SyntaxError("Parameter dataType has an invalid value")  # Raises an error about it
+        raise Exception("Parameter dataType has an invalid value.")  # Raises an exception about it
+

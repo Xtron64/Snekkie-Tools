@@ -1,2 +1,2 @@
-from src.debug import *
-from src.userInput import *
+from .src.debug import *
+from .src.userInput import *
